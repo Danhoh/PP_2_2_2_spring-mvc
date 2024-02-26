@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Cars</title>
+        <style>
+            td, th {
+                padding: 10px;
+                font-size: 50px;
+                border: 1px solid black;
+            }
+            table {
+                margin: 0 auto;
+            }
+        </style>
+    </head>
+    <body>
+        <table>
+            <thead>
+            <tr>
+                <th scope="col">Vendor</th>
+                <th scope="col">Model</th>
+                <th scope="col">Series</th>
+            </tr>
+            </thead>
+            <tbody>
+                <th:block th:each="car : ${cars}">
+                    <tr>
+                        <td th:text="${car.getVendor()}"></td>
+
+                        <td th:text="${car.getModel()}"></td>
+
+                        <td th:text="${car.getSeries()}"></td>
+                    </tr>
+                </th:block>
+            </tbody>
+        </table>
+    </body>
+</html>
