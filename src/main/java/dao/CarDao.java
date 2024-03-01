@@ -1,65 +1,23 @@
 package dao;
 
-import Entity.Car;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import util.HibernateUtil;
+import entity.Car;
+import org.springframework.stereotype.Component;
 
-import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class CarDao {
-    public void save(Car car) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
-            session.save(car);
-            transaction.commit();
-        } catch (HibernateException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public void saveAll(Car[] cars) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
-            for (Car car : cars) {
-                session.save(car);
-            }
-            transaction.commit();
-        } catch (HibernateException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public List<Car> getAllCars() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("FROM Car", Car.class).list();
-        } catch (HibernateException e) {
-            System.out.println(e.getMessage());
-        }
-        return new ArrayList<>();
-    }
-
-    public void deleteAllCars() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
-            session.createQuery("DELETE Car").executeUpdate();
-            transaction.commit();
-        } catch (HibernateException e) {
-            System.out.println(e.getMessage());
-        }
-    }
+// hibernate здесь, как я понял, не нужен, просто массива хватит
+    private static final ArrayList<Car> storedCars = new ArrayList<>(List.of(new Car[]{
+        new Car("BMW", "X5", 1234),
+        new Car("BMW", "X6", 1488),
+        new Car("BMW", "X7", 1337),
+        new Car("Lada", "Calina", 228),
+        new Car("Gaz", "21010", 2233),
+    }));
 
     public List<Car> getNCars(Integer count) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            TypedQuery<Car> query = session.createQuery("FROM Car", Car.class);
-            query.setMaxResults(count);
-            return query.getResultList();
-        } catch (HibernateException e) {
-            System.out.println(e.getMessage());
-        }
-        return new ArrayList<>();
+        return count >= 5 ? storedCars : storedCars.subList(0, count);
     }
 }

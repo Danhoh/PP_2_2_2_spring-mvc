@@ -1,16 +1,6 @@
-package Entity;
+package entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-@Entity
 public class Car {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
     private String vendor;
 
     private String model;
@@ -24,10 +14,6 @@ public class Car {
         this.vendor = vendor;
         this.model = model;
         this.series = series;
-    }
-
-    public long getId() {
-        return id;
     }
 
     public String getVendor() {

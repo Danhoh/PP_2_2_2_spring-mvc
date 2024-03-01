@@ -1,6 +1,6 @@
 package web.controller;
 
-import Entity.Car;
+import entity.Car;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,12 +13,16 @@ import java.util.List;
 
 @Controller
 public class CarController {
+    private final CarService carService;
+
     @Autowired
-    CarService carService;
+    public CarController(CarService carService) {
+        this.carService = carService;
+    }
 
     @GetMapping(value = "/cars")
-    public String printCars(ModelMap model, @RequestParam(defaultValue = "6") int count) {
-        List<Car> cars = count <= 5 ? carService.getNCars(count) : carService.getAllCars();
+    public String printCars(ModelMap model, @RequestParam(defaultValue = "5") int count) {
+        List<Car> cars = carService.getNCars(count);
 
         model.addAttribute("cars", cars);
         return "cars";
