@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class CarDao {
+public class CarDao implements CarDaoInterface {
 // hibernate здесь, как я понял, не нужен, просто массива хватит
     private static final ArrayList<Car> storedCars = new ArrayList<>(List.of(new Car[]{
         new Car("BMW", "X5", 1234),
